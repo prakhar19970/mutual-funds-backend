@@ -3,11 +3,12 @@ const app = express();
 var connection = require('./Database/connection');
 
 
+const {getFunds} = require('./controller/mutualFunds');
+
 app.get('/', async (req, res) => {
     const db = await connection.connect();
-    db.collection('mutual-funds2').find().toArray().then(results => {
-            console.log(results)
-        })
+    var results=await getFunds(db)
+    console.log(results)
 })
 
 app.use(express.json()); // support json encoded bodies
