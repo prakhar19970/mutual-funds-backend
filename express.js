@@ -1,9 +1,9 @@
 const express = require('express');
 const app = express();
 
+const { connectionString } = require( "./Database/dbconfig.js")
+
 const MongoClient = require('mongodb').MongoClient
-const password = 'Kochikame02@';
-const connectionString = `mongodb+srv://admin:${password}@cluster0.oruwf.mongodb.net/<funds>?retryWrites=true&w=majority`;
 const funds = require('./controller/mutualFunds');
 
 app.use(express.json());
@@ -27,15 +27,35 @@ function appStart(db) {
     })
 
     app.get('/funds/:id', (req, res) => {
-
         const id = req.params.id
         const fundData = funds.getFund(db, id)
         fundData.then((singleData) => {
-            res.status(200).send(singleData)
+            if (singleData === null) {
+                res.status(400).send(`fund with id: ${id} does not exists`);
+            }
+            else {
+                res.status(200).send(singleData)
+            }
         }).catch((err) => {
             res.sendStatus(404)
         })
     })
+
+    app.delete('/funds/:id', (req, res) => {
+        const id = req.params.id
+        const fundData = funds.deleteFund(db, id)
+
+        fundData.then((docStatus) => {
+             if (docStatus.deletedCount === 0) {
+                res.status(400).send(`fund with id: ${id} does not exists`);
+            } else {
+                res.status(410).send(`Fund with id: ${id} deleted Status Code:${res.statusCode}`);
+            }
+        }).catch((err) => {
+            res.sendStatus(404)
+        })
+    })
+
 
     app.listen(3000);
     console.log("Listening on port 3000");
