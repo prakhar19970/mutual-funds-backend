@@ -1,15 +1,12 @@
 
-async function getFunds(db) {
-    let allFunds = ''
-    await new Promise((resolve, reject) => {
-        db.collection('mutual-funds2').find().toArray().then(results => {
-            allFunds = results;
-            resolve()
+ function getAllFunds(db) {
+    return new Promise((resolve, reject) => {
+        db.collection('mutual-funds2').find().toArray().then(allFunds => {
+            resolve(allFunds)
         })
     });
-    return allFunds;
 }
 
 
 
-module.exports = { getFunds }
+module.exports = { getAllFunds }
