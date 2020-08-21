@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 
  function getAllFunds(db) {
     return new Promise((resolve, reject) => {
@@ -7,6 +8,13 @@
     });
 }
 
+function getFund(db,id) {
+    return new Promise((resolve, reject) => {
+        query={"_id":ObjectId(id)}
+        db.collection('mutual-funds2').findOne(query).then(fund => {
+            resolve(fund)
+        })
+    });
+}
 
-
-module.exports = { getAllFunds }
+module.exports = { getAllFunds, getFund }
