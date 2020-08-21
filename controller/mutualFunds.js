@@ -28,6 +28,16 @@ function deleteFund(db,id) {
     });
 }
 
+function updateFund(db,id,updateFeilds) {
+    return new Promise((resolve, reject) => {
+        query={"_id":ObjectId(id)}
+        newvalues = { $set: updateFeilds };
+        db.collection(dbCollection).updateOne(query,newvalues).then(status => {
+            resolve(status)
+        })
+    });
+}
 
 
-module.exports = { getAllFunds, getFund ,deleteFund}
+
+module.exports = { getAllFunds, getFund ,deleteFund ,updateFund}
