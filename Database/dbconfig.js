@@ -1,4 +1,4 @@
-const password = '***********';
+const password = 'Kochikame02@';
 const connectionString = `mongodb+srv://admin:${password}@cluster0.oruwf.mongodb.net/<funds>?retryWrites=true&w=majority`;
 
 dbCollection='mutual-funds2'

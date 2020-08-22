@@ -12,9 +12,21 @@ const { dbCollection }=require("../Database/dbconfig.js")
 
 function getFund(db,id) {
     return new Promise((resolve, reject) => {
-        query={"_id":ObjectId(id)}
+        query={"_id":(id)}
         db.collection(dbCollection).findOne(query).then(fund => {
             resolve(fund)
+        })
+    });
+}
+
+function createFund(db,newFund){  
+    newFund._id= `ObjectId(${newFund._id})`;
+    return new Promise((resolve, reject) => {
+        db.collection(dbCollection).insertOne(newFund).then( error,status => {
+            if(error){
+                reject()
+            }
+            resolve(status)
         })
     });
 }
@@ -40,4 +52,7 @@ function updateFund(db,id,updateFeilds) {
 
 
 
-module.exports = { getAllFunds, getFund ,deleteFund ,updateFund}
+
+
+
+module.exports = { getAllFunds, getFund, createFund, deleteFund ,updateFund}
