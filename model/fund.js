@@ -1,7 +1,5 @@
 
 const express = require('express');
-const opn = require('opn')
-opn(`https://${process.env.PORT}/funds/` || 'http://localhost:3000/funds/')
 const app = express();
 
 
@@ -76,8 +74,6 @@ function appStart(db) {
         })
     })
 
-
-    app.listen(process.env.PORT || 3000);
     console.log("server started");
 }
 
