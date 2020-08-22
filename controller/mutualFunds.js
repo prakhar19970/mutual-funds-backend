@@ -12,7 +12,7 @@ const { dbCollection }=require("../Database/dbconfig.js")
 
 function getFund(db,id) {
     return new Promise((resolve, reject) => {
-        query={"_id":(id)}
+        query={"_id":ObjectId(id)}
         db.collection(dbCollection).findOne(query).then(fund => {
             resolve(fund)
         })

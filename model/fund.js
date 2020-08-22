@@ -22,6 +22,7 @@ function appStart(db) {
         const id = req.params.id
         const fundData = funds.getFund(db, id)
         fundData.then((singleData) => {
+            console.log(singleData)
             if (singleData === null) {
                 res.status(400).send(`fund with id: ${id} does not exists`);
             }
