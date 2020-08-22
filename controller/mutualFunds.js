@@ -20,12 +20,8 @@ function getFund(db,id) {
 }
 
 function createFund(db,newFund){  
-    newFund._id= `ObjectId(${newFund._id})`;
     return new Promise((resolve, reject) => {
-        db.collection(dbCollection).insertOne(newFund).then( error,status => {
-            if(error){
-                reject()
-            }
+        db.collection(dbCollection).insertOne(newFund).then(status => {
             resolve(status)
         })
     });

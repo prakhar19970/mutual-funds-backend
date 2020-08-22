@@ -38,9 +38,9 @@ function appStart(db) {
         const fundData = funds.createFund(db, newFields)
         fundData.then((docStatus) => {
             console.log(docStatus)
-            res.status(202).send(`new field created with id ${newFields._id} Status Code:${res.statusCode}`);
+            res.status(202).send(`new fund created with id ${docStatus.insertedId} Status Code:${res.statusCode}`);
         }).catch((err) => {
-            res.status(404).send(`Fund already exists, Duplicate Entry or Wrong Format statusCode: ${res.statusCode}`);
+            res.status(404)
         })
     })
 
