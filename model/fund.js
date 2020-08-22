@@ -1,5 +1,7 @@
 
 const express = require('express');
+const opn = require('opn')
+opn(`https://${process.env.PORT}/funds/` || 'http://localhost:3000/funds/')
 const app = express();
 
 
