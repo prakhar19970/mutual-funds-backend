@@ -58,11 +58,12 @@ const createFund = (req, res) => {
 
 const deleteFund = (req, res) => {
     const id = req.params.id
-    Fund.remove().then((docStatus) => {
+    query = { "_id": id }
+    Fund.deleteOne(query).then((docStatus) => {
         if (docStatus.deletedCount === 0) {
             res.status(400).send(`fund with id: ${id} does not exists`);
         } else {
-            res.status(410).send(`Fund with id: ${id} deleted Status Code:${res.statusCode}`);
+            res.status(410).send(`Fund with id: ${id} deleted`);
         }
     }).catch((err) => {
         res.status(404).send("Not Found : Invalid Input")
