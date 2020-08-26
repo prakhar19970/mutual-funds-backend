@@ -26,6 +26,9 @@ app.put('/funds/:id', updateFund)
 app.delete('/funds',  (req, res) => {
         res.status(404).send("Not Found : Invalid Input")
     })
+app.put('/funds',  (req, res) => {
+        res.status(404).send("Not Found : Invalid Input")
+    })
     
 
 app.listen(process.env.PORT || 3000);

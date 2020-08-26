@@ -11,6 +11,7 @@ This project contains simple curd operations and uses Express framework and Mong
 
 ```
  - List all mutual funds
+ - Create a mutual fund
  - Get a mutual fund
  - Delete a mutual fund 
  - Update a mutual fund
