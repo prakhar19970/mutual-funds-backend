@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const { Double } = require("mongodb");
+const {dbCollection}= require('../Database/dbconfig.js')
+
 const Schema = mongoose.Schema;
 
 const FundsSchema = new Schema(
@@ -75,4 +76,4 @@ const FundsSchema = new Schema(
     },
 );
 
-module.exports = Fund = mongoose.model("funds", FundsSchema);
+module.exports = Fund = mongoose.model(dbCollection, FundsSchema);
