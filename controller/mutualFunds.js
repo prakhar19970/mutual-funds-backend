@@ -1,4 +1,4 @@
-const Fund = require("../Schema/fundSchema.js")
+const Fund = require("../model/fundSchema.js")
 
 const getAllFunds = (req, res) => {
     if (req.query.search) {
