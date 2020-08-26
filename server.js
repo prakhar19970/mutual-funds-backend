@@ -1,7 +1,7 @@
 
 
 const { connectionString } = require("./Database/dbconfig.js")
-const { appStart }=require("./model/fund.js")
+const { appStart }=require("./controller/mutualFunds.js")
 const MongoClient = require('mongodb').MongoClient
 
 //connect to database

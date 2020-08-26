@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-const funds = require('../controller/mutualFunds.js');
+const funds = require('../model/fund.js');
 
 function appStart(db) {
 
@@ -19,19 +19,20 @@ function appStart(db) {
     })
 
     app.get('/funds/:id', (req, res) => {
-        const id = req.params.id
-        const fundData = funds.getFund(db, id)
-        fundData.then((singleData) => {
-            console.log(singleData)
-            if (singleData === null) {
-                res.status(400).send(`fund with id: ${id} does not exists`);
-            }
-            else {
-                res.status(200).send(singleData)
-            }
-        }).catch((err) => {
-            res.sendStatus(404)
-        })
+        console.log(req.query)
+        // const id = req.params.id
+        // const fundData = funds.getFund(db, id)
+        // fundData.then((singleData) => {
+        //     console.log(singleData)
+        //     if (singleData === null) {
+        //         res.status(400).send(`fund with id: ${id} does not exists`);
+        //     }
+        //     else {
+        //         res.status(200).send(singleData)
+        //     }
+        // }).catch((err) => {
+        //     res.sendStatus(404)
+        // })
     })
 
     app.post('/funds', (req, res) => {
