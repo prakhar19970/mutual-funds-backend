@@ -9,7 +9,8 @@ const funds = require('../model/fund.js');
 
 function appStart(db) {
 
-    app.get('/funds', (req, res) => {
+    console.log(db)
+   app.get('/funds', (req, res) => {
         if (req.query.search) {
             const id = req.query.search
             const fundData = funds.getFund(db, id)
@@ -26,7 +27,7 @@ function appStart(db) {
             })
         }
         else {
-            const fundsData = funds.getAllFunds(db)
+            const fundsData = funds.getAllFunds()
             fundsData.then((allData) => {
                 res.status(200).send(allData)
             }).catch((err) => {
@@ -68,23 +69,22 @@ function appStart(db) {
         }
     })
 
-    app.delete('/funds',(req,res)=>{
+    app.delete('/funds', (req, res) => {
         res.status(404).send("Not Found : Invalid Input")
     })
 
     app.delete('/funds/:id', (req, res) => {
         const id = req.params.id
-        console.log(typeof(id))
-            const fundData = funds.deleteFund(db, id)
-            fundData.then((docStatus) => {
-                if (docStatus.deletedCount === 0) {
-                    res.status(400).send(`fund with id: ${id} does not exists`);
-                } else {
-                    res.status(410).send(`Fund with id: ${id} deleted Status Code:${res.statusCode}`);
-                }
-            }).catch((err) => {
-                res.status(404).send("Not Found : Invalid Input")
-            })
+        const fundData = funds.deleteFund(db, id)
+        fundData.then((docStatus) => {
+            if (docStatus.deletedCount === 0) {
+                res.status(400).send(`fund with id: ${id} does not exists`);
+            } else {
+                res.status(410).send(`Fund with id: ${id} deleted Status Code:${res.statusCode}`);
+            }
+        }).catch((err) => {
+            res.status(404).send("Not Found : Invalid Input")
+        })
     })
 
     app.put('/funds/:id', (req, res) => {
@@ -101,7 +101,6 @@ function appStart(db) {
             res.sendStatus(404)
         })
     })
-
 
     app.listen(process.env.PORT || 3000);
     console.log("server started");
