@@ -1,21 +1,19 @@
 const fs = require('fs');
+const mongoose = require("mongoose");
+const Fund =require("./Schema/fundSchema.js")
+const {connectionString}= require('./Database/dbconfig.js')
 
-const MongoClient = require('mongodb').MongoClient
-const password = process.env.DB_PASS;
-const connectionString = `mongodb+srv://admin:${password}@cluster0.oruwf.mongodb.net/<funds>?retryWrites=true&w=majority`;
 
-MongoClient.connect(connectionString, { useUnifiedTopology: true })
-    .then(client => {
-        // console.log('Connected to Database')
-        const db = client.db('funds')
-        // console.log(db)
-        initialize(db)
+mongoose.connect(connectionString, {useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true, })
+    .then(response => {
+        console.log("connected database")
+        initialize();
     })
 
-function initialize(db) {
-    const dbCollection = db.collection('mutual-funds2')
-    // console.log(dbCollection)
+function initialize() {
     const rawdata = fs.readFileSync('./funds.json')
     const funds = JSON.parse(rawdata);
-    dbCollection.insertMany(funds)
+    Fund.insertMany(funds)
 }

@@ -11,10 +11,8 @@ function getAllFunds() {
 //     return result; 
     // });
 
-    let result= Fund.find().then(allfunds=>{
-        return allfunds
-    })
-    return result;
+    
+    // return result;
 }
 
 function getFund(db, id) {
