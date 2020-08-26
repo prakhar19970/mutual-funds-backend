@@ -18,8 +18,8 @@ mongoose.connect(connectionString, {  useNewUrlParser: true,
 
 
 app.get('/funds', getAllFunds)
-// app.get('/funds/:id', getSingleFund)
-// app.post('/funds', createFund)
+app.get('/funds/:id', getSingleFund)
+app.post('/funds', createFund)
 // app.delete('/funds/:id', deleteFund)
 // app.put('/funds/:id', updateFund)
 

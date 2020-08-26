@@ -6,20 +6,17 @@ const Schema = mongoose.Schema;
 const FundsSchema = new Schema(
     {
         code: {
-            type: String,
-            
+            type: String, 
             unique: true,
             uppercase: true,
             trim: true,
         },
         name: {
             type: String,
-            
             trim: true,
         },
         category: {
             type: String,
-            
             trim: true,
         },
         reinvestment: {
@@ -28,17 +25,14 @@ const FundsSchema = new Schema(
         },
         fund_house: {
             type: String,
-            
             trim: true,
         },
         fund_type: {
             type: String,
-            
             trim: true,
         },
         fund_category: {
             type: String,
-            
             trim: true,
         },
         plan: {
@@ -49,23 +43,18 @@ const FundsSchema = new Schema(
         returns: {
             year_1: {
                 type: Number,
-                
             },
             year_3: {
                 type: Number,
-                
             },
             year_5: {
                 type: Number,
-                
             },
             inception: {
                 type: Number,
-                
             },
             date: {
                 type: Date,
-                
                 trim:true,
             }
         },

@@ -2,64 +2,52 @@
 const Fund = require("../Schema/fundSchema.js")
 
 const getAllFunds = (req, res) => {
-    // if (req.query.search) {
-    //     const id = req.query.search
-    //     const fundData = funds.getFund(id)
-    //     fundData.then((singleData) => {
-    //         console.log(singleData)
-    //         if (singleData === null) {
-    //             res.status(400).send(`fund with id: ${id} does not exists`);
-    //         }
-    //         else {
-    //             res.status(200).send(singleData)
-    //         }
-    //     }).catch((err) => {
-    //         res.sendStatus(404)
-    //     })
-    // }
-    // else {
-        console.log("sdnjvnsd")
+    if (req.query.search) {
+        const fund_Name = req.query.search
+        query={"name": fund_Name}
+        Fund.findOne(query).then(fund => {
+            if (fund === null) {
+                res.status(400).send(`fund with id: ${id} does not exists`);
+            }
+            else {
+                res.status(200).send(fund)
+            }
+        }).catch((err) => {
+            res.status(404).send("Fund not found")
+        })    
+    }
+    else {
         Fund.find().then(allfunds => {
-            console.log(allfunds)
-            // res.status(200).send(allfunds)
+            res.status(200).send(allfunds)
         }).catch((err) => {
             res.status(404).send('Request Not Found')
         })
-        // const fundsData = funds.getAllFunds()
-        // fundsData.then((allData) => {
-        //     res.status(200).send(allData)
-        // }).catch((err) => {
-        //     res.status(404).send('Request Not Found')
-        // })
-    // }
+    }
 }
 
 const getSingleFund = (req, res) => {
-    console.log(req.query)
     const id = req.params.id
-    const fundData = funds.getFund(db, id)
-    fundData.then((singleData) => {
-        console.log(singleData)
-        if (singleData === null) {
+    query = { "_id": id }
+     Fund.findOne(query).then(fund => {
+        if (fund === null) {
             res.status(400).send(`fund with id: ${id} does not exists`);
         }
         else {
-            res.status(200).send(singleData)
+            res.status(200).send(fund)
         }
     }).catch((err) => {
         res.status(404).send("Fund not found")
-    })
+    })     
 }
 
 const createFund = (req, res) => {
-    const newFields = req.body
-    if (Object.entries(newFields).length) {
-        const fundData = funds.createFund(db, newFields)
-        fundData.then((docStatus) => {
+    const newFund = new Fund(req.body)
+    if (Object.entries(req.body).length) {
+        newFund.save().then((docStatus) => {
             console.log(docStatus)
-            res.status(202).send(`new fund created with id ${docStatus.insertedId} Status Code:${res.statusCode}`);
+            res.status(202).send(docStatus);
         }).catch((err) => {
-            res.status(404)
+            res.status(400).send("Invalid Input / Duplicate Code value")
         })
     }
     else {
@@ -70,8 +58,7 @@ const createFund = (req, res) => {
 
 const deleteFund = (req, res) => {
     const id = req.params.id
-    const fundData = funds.deleteFund(db, id)
-    fundData.then((docStatus) => {
+    Fund.remove().then((docStatus) => {
         if (docStatus.deletedCount === 0) {
             res.status(400).send(`fund with id: ${id} does not exists`);
         } else {
