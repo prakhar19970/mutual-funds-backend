@@ -1,6 +1,6 @@
 const fs = require('fs');
 const mongoose = require("mongoose");
-const Fund =require("./Schema/fundSchema.js")
+const Fund =require("./model/fundSchema.js")
 const {connectionString}= require('./Database/dbconfig.js')
 
 
