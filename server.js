@@ -21,7 +21,7 @@ app.get('/funds', getAllFunds)
 app.get('/funds/:id', getSingleFund)
 app.post('/funds', createFund)
 app.delete('/funds/:id', deleteFund)
-// app.put('/funds/:id', updateFund)
+app.put('/funds/:id', updateFund)
 
 app.delete('/funds',  (req, res) => {
         res.status(404).send("Not Found : Invalid Input")

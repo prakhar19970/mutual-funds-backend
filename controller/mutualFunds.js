@@ -1,10 +1,9 @@
-// const funds = require('../model/fund.js');
 const Fund = require("../Schema/fundSchema.js")
 
 const getAllFunds = (req, res) => {
     if (req.query.search) {
         const fund_Name = req.query.search
-        query={"name": fund_Name}
+        query = { "name": fund_Name }
         Fund.findOne(query).then(fund => {
             if (fund === null) {
                 res.status(400).send(`fund with id: ${id} does not exists`);
@@ -14,7 +13,7 @@ const getAllFunds = (req, res) => {
             }
         }).catch((err) => {
             res.status(404).send("Fund not found")
-        })    
+        })
     }
     else {
         Fund.find().then(allfunds => {
@@ -28,7 +27,7 @@ const getAllFunds = (req, res) => {
 const getSingleFund = (req, res) => {
     const id = req.params.id
     query = { "_id": id }
-     Fund.findOne(query).then(fund => {
+    Fund.findOne(query).then(fund => {
         if (fund === null) {
             res.status(400).send(`fund with id: ${id} does not exists`);
         }
@@ -37,7 +36,7 @@ const getSingleFund = (req, res) => {
         }
     }).catch((err) => {
         res.status(404).send("Fund not found")
-    })     
+    })
 }
 
 const createFund = (req, res) => {
@@ -72,16 +71,20 @@ const deleteFund = (req, res) => {
 
 const updateFund = (req, res) => {
     const id = req.params.id
+    filter = { "_id": id }
     const updateFields = req.body
-    const fundData = funds.updateFund(db, id, updateFields)
-    fundData.then((docStatus) => {
-        if (docStatus.matchedCount === 0) {
-            res.status(400).send(`fund with id: ${id} does not exists`);
+    console.log(updateFields)
+    Fund.updateOne(filter, updateFields).then((docStatus) => {
+        if (docStatus.nModified && docStatus.n) {
+            Fund.findOne(filter).then(result=>{
+                res.status(202).send(result);
+            })
         } else {
-            res.status(202).send(`Fund with id: ${id} updated Status Code:${res.statusCode}`);
+            console.log(docStatus)
+            res.status(400).send(`Invalid / Duplicate Input`);
         }
     }).catch((err) => {
-        res.sendStatus(404)
+        res.status(404).send(`Invalid Id`);
     })
 }
 
